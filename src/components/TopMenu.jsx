@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from "react-router-dom"
 
 export default class TopMenu extends Component {
   render() {
@@ -9,29 +10,29 @@ export default class TopMenu extends Component {
             <ul className="list-inline text-center ">
               <li className="list-inline-item ">
                 <div className="listTopItem">
-                  <a aria-current="page" className="activeLink" href="#">
+                  <Link aria-current="page" className="activeLink" href="/">
                     Trending
-                  </a>
+                  </Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <a href="#">Podcast</a>
+                  <Link href="/">Podcast</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <a href="#">Moods And Genres</a>
+                  <Link href="/">Moods And Genres</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <a href="#">NewReleases</a>
+                  <Link href="/">NewReleases</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <a href="#">Discover</a>
+                  <Link href="/">Discover</Link>
                 </div>
               </li>
             </ul>

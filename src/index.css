@@ -23,6 +23,19 @@ body{
 
 }
 
+.slick-prev {
+  left: 1% !important;
+  z-index: 1;
+  top:40%;
+ 
+}
+
+.slick-next {
+  right: 2% !important;
+  z-index: 1;
+  top:45%;
+}
+
 
 nav {
   background-color: #000;
@@ -260,6 +273,7 @@ a:hover{
   text-transform: none;
   margin: 24px 0;
   font-weight: 900;
+  text-transform: capitalize;
 }
 
 .media-obj{
