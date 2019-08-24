@@ -43,39 +43,49 @@ export default class MainAlbumContainer extends Component {
     let results = await Promise.all(
       this.props.query.map(async query => await this.fetchData(query))
     );
-    setTimeout(() => this.setState({
-      results: results,
-      isLoading: false
-    }), 1500);
-  }
+    console.log(results);
+    setTimeout(
+      () =>
+        this.setState({
+          results: results,
+          isLoading: false
+        }),
+      1000
+    );
+  };
 
   render() {
     return (
       <>
-           {this.state.isLoading && (
-            <div className="main-albums-container">
-            <div className="container" style={{position:"absolute", top:"40%", left:"40%"}}>
-            <ClipLoader
-              sizeUnit={"px"}
-              size={120}
-              color={"#fff"}
-              loading={true}
-            />
-          </div> 
-          </div>
-             ) }
-        {this.state.results && this.state.errMess === undefined && !this.state.isLoading && (
+        {this.state.isLoading && (
           <div className="main-albums-container">
-            {this.state.results.map((list, index) => (
-              <SongCarousel
-                queryParams={this.props.query}
-                index={index}
-                key={index}
-                albumList={list}
+            <div
+              className="container"
+              style={{ position: "absolute", top: "40%", left: "40%" }}
+            >
+              <ClipLoader
+                sizeUnit={"px"}
+                size={120}
+                color={"#fff"}
+                loading={true}
               />
-            ))}
+            </div>
           </div>
         )}
+        {this.state.results &&
+          this.state.errMess === undefined &&
+          !this.state.isLoading && (
+            <div className="main-albums-container">
+              {this.state.results.map((list, index) => (
+                <SongCarousel
+                  queryParams={this.props.query}
+                  index={index}
+                  key={index}
+                  albumList={list}
+                />
+              ))}
+            </div>
+          )}
         {this.state.errMess && !this.state.isLoading && (
           <Alert color="danger">
             <h3>

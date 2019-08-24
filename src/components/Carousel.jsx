@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import playImg from "../assets/Play.png"
 
 export default class SongCarousel extends Component {
   constructor(props) {
@@ -50,16 +51,17 @@ export default class SongCarousel extends Component {
         <Slider {...settings}>
           {this.props.albumList.map(item => (
             <div key={item.album.id}>
-           {/*      <Link
-                to={"/AlbumPage" + item.album.id}
-              > */}
+         <div class="media-obj text-center">
               <img
                 width="97%"
                 height="210px"
                 src={item.album.cover_medium}
                 alt={item.album.title}
               />
-             {/*  </Link> */}
+              <div class="middle">
+                <img src={playImg} width="40px"/>
+            </div>
+            </div>
               <Link
                 className="nav-link text-white text-center"
                 to={"/AlbumPage" + item.album.id}
