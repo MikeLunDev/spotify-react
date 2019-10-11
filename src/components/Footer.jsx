@@ -8,7 +8,7 @@ import { handleIsPlaying } from "../actions/isPlaying";
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
-  isPlaying: () => dispatch(handleIsPlaying())
+  togglePlaying: () => dispatch(handleIsPlaying())
 });
 class Footer extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class Footer extends Component {
           />
           {!this.props.isPlaying && (
             <FaPlay
-              onClick={this.props.isPlaying}
+              onClick={this.props.togglePlaying}
               size="21px"
               className="mx-5 mb-2 d-inline-block pt-2"
               style={{ color: "white", cursor: "pointer" }}
@@ -75,7 +75,7 @@ class Footer extends Component {
           )}
           {this.props.isPlaying && (
             <FaPause
-              onClick={this.props.isPlaying}
+              onClick={this.props.togglePlaying}
               size="21px"
               className="mx-5 mb-2 d-inline-block pt-2"
               style={{ color: "white", cursor: "pointer" }}
