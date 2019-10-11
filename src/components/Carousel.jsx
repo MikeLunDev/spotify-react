@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import playImg from "../assets/Play.png"
+import playImg from "../assets/Play.png";
 
 export default class SongCarousel extends Component {
   constructor(props) {
@@ -47,24 +47,24 @@ export default class SongCarousel extends Component {
     };
     return (
       <div className="container-fluid">
-        <h1 className="header ">{this.props.queryParams[this.props.index]}</h1>
+        <h1 className="header ">{this.props.title}</h1>
         <Slider {...settings}>
           {this.props.albumList.map(item => (
             <div key={item.album.id}>
-         <div class="media-obj text-center">
-              <img
-                width="97%"
-                height="210px"
-                src={item.album.cover_medium}
-                alt={item.album.title}
-              />
-              <div class="middle">
-                <img src={playImg} width="40px"/>
-            </div>
-            </div>
+              <div className="media-obj text-center">
+                <img
+                  width="97%"
+                  height="210px"
+                  src={item.album.cover_medium}
+                  alt={item.album.title}
+                />
+                <div className="middle">
+                  <img src={playImg} alt="play button" width="40px" />
+                </div>
+              </div>
               <Link
                 className="nav-link text-white text-center"
-                to={"/AlbumPage" + item.album.id}
+                to={"/AlbumPage/" + item.album.id}
               >
                 {" "}
                 {item.album.title}

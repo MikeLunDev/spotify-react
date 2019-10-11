@@ -10,29 +10,29 @@ export default class TopMenu extends Component {
             <ul className="list-inline text-center ">
               <li className="list-inline-item ">
                 <div className="listTopItem">
-                  <Link aria-current="page" className="activeLink" href="/">
+                  <Link aria-current="page" className="activeLink" to="/">
                     Trending
                   </Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <Link href="/">Podcast</Link>
+                  <Link to="/">Podcast</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <Link href="/">Moods And Genres</Link>
+                  <Link to="/">Moods And Genres</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <Link href="/">NewReleases</Link>
+                  <Link to="/">NewReleases</Link>
                 </div>
               </li>
               <li className="list-inline-item">
                 <div className="listTopItem">
-                  <Link href="/">Discover</Link>
+                  <Link to="/">Discover</Link>
                 </div>
               </li>
             </ul>

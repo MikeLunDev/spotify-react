@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import {IoIosHome,IoIosSearch,IoIosBookmark } from "react-icons/io";
+import { IoIosHome, IoIosSearch, IoIosBookmark } from "react-icons/io";
 
 export default class SpotifySideBar extends Component {
   render() {
@@ -10,26 +10,26 @@ export default class SpotifySideBar extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark d-flex flex-column justify-content-between align-items-start h-100 mywidth">
           <div>
             <Link className="navbar-brand py-4 pl-2" to="/">
-              <img src={logo} width="130px" height="40px" />
+              <img src={logo} alt="logo" width="130px" height="40px" />
             </Link>
 
             <ul className="navbar-nav pl-1 mr-auto flex-column">
               <li className="nav-item pt-2 py-1">
                 <Link id="home" className="nav-link spotifyFont active" to="/">
                   {" "}
-                  <IoIosHome className="mb-1 mr-1"/>
+                  <IoIosHome className="mb-1 mr-1" />
                   Home
                 </Link>
               </li>
               <li className="nav-item  py-1">
                 <Link className="nav-link spotifyFont" to="/search">
-                  <IoIosSearch className="mb-1"/> Search
+                  <IoIosSearch className="mb-1" /> Search
                 </Link>
               </li>
               <li className="nav-item spotifyFont py-1">
                 <Link className="nav-link spotifyFont" to="/">
                   {" "}
-                  <IoIosBookmark className="mb-1"/> Your Library
+                  <IoIosBookmark className="mb-1" /> Your Library
                 </Link>
               </li>
             </ul>

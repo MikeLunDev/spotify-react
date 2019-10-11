@@ -62,7 +62,7 @@ export default class MainPage extends Component {
               )}
             />
             <Route path="/search/:SearchText" component={ShowSearch} />
-            <Route path="/AlbumPage:AlbumId" exact component={AlbumPage} />
+            <Route path="/AlbumPage/:AlbumId" exact component={AlbumPage} />
           </div>
           <Footer />
         </div>

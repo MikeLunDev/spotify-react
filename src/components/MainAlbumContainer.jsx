@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Alert, Badge } from "reactstrap";
 import SongCarousel from "./Carousel";
 import { ClipLoader } from "react-spinners";
+import { connect } from "react-redux";
+import { handleGetSongs } from "../actions/songs";
 
-const headers = new Headers({
+/* const headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
   "X-RapidAPI-Key": "575de39080mshf1f9cab8127c63fp1bcad8jsn113d9f3f814b"
 });
@@ -13,19 +15,22 @@ const fetchParams = {
   headers: headers
 };
 
-const url = "https://deezerdevs-deezer.p.rapidapi.com/search?q=";
-export default class MainAlbumContainer extends Component {
+const url = "https://deezerdevs-deezer.p.rapidapi.com/search?q="; */
+
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
+  getSongs: query => dispatch(handleGetSongs(query))
+});
+class MainAlbumContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      errMess: undefined,
-      results: null,
       isLoading: true
     };
   }
 
-  fetchData = async query => {
+  /*  fetchData = async query => {
     try {
       var response = await fetch(url + query, fetchParams);
       var json = await response.json();
@@ -38,16 +43,12 @@ export default class MainAlbumContainer extends Component {
       });
     }
   };
-
+ */
   componentDidMount = async () => {
-    let results = await Promise.all(
-      this.props.query.map(async query => await this.fetchData(query))
-    );
-    console.log(results);
+    this.props.query.map(query => this.props.getSongs(query));
     setTimeout(
       () =>
         this.setState({
-          results: results,
           isLoading: false
         }),
       1000
@@ -72,25 +73,27 @@ export default class MainAlbumContainer extends Component {
             </div>
           </div>
         )}
-        {this.state.results &&
-          this.state.errMess === undefined &&
+        {this.props.songs &&
+          this.props.error.message === "" &&
           !this.state.isLoading && (
             <div className="main-albums-container">
-              {this.state.results.map((list, index) => (
+              {Object.entries(this.props.songs).map((titleAndList, index) => (
                 <SongCarousel
-                  queryParams={this.props.query}
-                  index={index}
                   key={index}
-                  albumList={list}
+                  albumList={titleAndList[1]}
+                  title={titleAndList[0]}
                 />
               ))}
             </div>
           )}
-        {this.state.errMess && !this.state.isLoading && (
+        {this.props.error.fetchError && !this.state.isLoading && (
           <Alert color="danger">
             <h3>
-              There was an error:{" "}
-              <Badge color="danger">Error code: #{this.state.errMess}</Badge>
+              There was an error: <br />
+              <Badge color="danger">
+                Error code:{" "}
+                {`${this.props.error.statusCode}, ${this.props.error.message}`}
+              </Badge>
               <br />
               <br />
               Please contact us at{" "}
@@ -105,3 +108,8 @@ export default class MainAlbumContainer extends Component {
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainAlbumContainer);

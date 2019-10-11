@@ -5,6 +5,12 @@ import { ClipLoader } from "react-spinners";
 import { IoIosMusicalNote } from "react-icons/io";
 import { GoPrimitiveDot } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
+import { handleGetAlbum } from "../actions/albums";
+import { handleAddSongToPlaylist } from "../actions/playlist";
+import { handleIsPlaying } from "../actions/isPlaying";
+import { connect } from "react-redux";
+/* 
+WHITHOUT REDUX
 
 const headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -16,9 +22,31 @@ const fetchParams = {
   headers: headers
 };
 
-const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
+const url = "https://deezerdevs-deezer.p.rapidapi.com/album/"; 
+fetchData = async id => {
+    try {
+      var response = await fetch(url + id, fetchParams);
+      var json = await response.json();
+      console.log("results of id", json);
+      return response.ok ? json : this.setState({ errMess: json.message });
+    } catch (err) {
+      return this.setState({
+        errMess: "Error on fetch" + err
+      });
+    }
+  };
 
-export default class AlbumPage extends Component {
+*/
+
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
+  getAlbum: id => dispatch(handleGetAlbum(id)),
+  addToPlaylist: (track, album) =>
+    dispatch(handleAddSongToPlaylist(track, album)),
+  isPlaying: () => dispatch(handleIsPlaying())
+});
+
+class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
@@ -31,13 +59,14 @@ export default class AlbumPage extends Component {
     };
   }
 
+  getAlbumId = () => this.props.match.params.AlbumId;
+
   componentDidMount = async () => {
-    let albumId = this.props.match.params.AlbumId;
-    let results = await this.fetchData(albumId);
+    let albumId = this.getAlbumId();
+    await this.props.getAlbum(albumId);
     setTimeout(
       () =>
         this.setState({
-          results: results,
           isLoading: false
         }),
       1000
@@ -48,19 +77,6 @@ export default class AlbumPage extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  };
-
-  fetchData = async id => {
-    try {
-      var response = await fetch(url + id, fetchParams);
-      var json = await response.json();
-      console.log("results of id", json);
-      return response.ok ? json : this.setState({ errMess: json.message });
-    } catch (err) {
-      return this.setState({
-        errMess: "Error on fetch" + err
-      });
-    }
   };
 
   giveMinutes = seconds => {
@@ -75,7 +91,6 @@ export default class AlbumPage extends Component {
   };
 
   handleHover = index => {
-    console.log(index);
     this.setState({
       hoverId: index
     });
@@ -109,8 +124,8 @@ export default class AlbumPage extends Component {
                 </div>
               )}
               {!this.state.isLoading &&
-                this.state.results &&
-                this.state.errMess === undefined && (
+                this.props.album &&
+                !this.props.error.fetchError && (
                   <>
                     <div
                       id="picture"
@@ -119,20 +134,20 @@ export default class AlbumPage extends Component {
                       <div className="text-center py-2">
                         <img
                           className="img-fluid mt-4 albumPicture shadow-lg rounded"
-                          src={this.state.results.cover_medium}
+                          src={this.props.album.cover_medium}
                           alt="album cover"
                         />
                         <h4 className="myAlbumTitle pt-3 pb-0 mb-0">
-                          {this.state.results.title}
+                          {this.props.album.title}
                         </h4>
                         <p className="albumUnderLink2">
-                          {this.state.results.artist.name}
+                          {this.props.album.artist.name}
                         </p>
                         <button className="play mt-3">PLAY</button>
                         <div className="py-2">
                           <p className="dateAndSongs">
-                            {this.state.results.release_date.substring(0, 4)} -{" "}
-                            {this.state.results.nb_tracks} SONGS
+                            {this.props.album.release_date.substring(0, 4)} -{" "}
+                            {this.props.album.nb_tracks} SONGS
                           </p>
                         </div>
                         <div className="pt-4 mr-4">
@@ -161,7 +176,7 @@ export default class AlbumPage extends Component {
                     </div>
                     <div className="col-xs-12 col-lg-9 col-xl-8 pt-5 pr-2 mb-2 pb-3 pl-lg-5 pl-xl-0 pl-md-0">
                       <ul className="list-unstyled w-100 ">
-                        {this.state.results.tracks.data.map((track, index) => (
+                        {this.props.album.tracks.data.map((track, index) => (
                           <li
                             onMouseEnter={() => this.handleHover(index)}
                             onMouseLeave={this.handleLeave}
@@ -175,6 +190,13 @@ export default class AlbumPage extends Component {
                                     {this.state.hoverId >= 0 &&
                                     this.state.hoverId === index ? (
                                       <FaPlay
+                                        onClick={() => {
+                                          this.props.addToPlaylist(
+                                            track,
+                                            this.props.album
+                                          );
+                                          this.props.isPlaying();
+                                        }}
                                         size="21px"
                                         className="mr-2 mb-2 d-inline-block pt-2"
                                         style={{ color: "white" }}
@@ -211,7 +233,7 @@ export default class AlbumPage extends Component {
                                 </a>
                                 <GoPrimitiveDot className="mx-2" size="9px" />
                                 <a className="albumUnderLink2 " href="/">
-                                  {this.state.results.title}
+                                  {this.props.album.title}
                                 </a>
                               </div>
                             </div>
@@ -228,3 +250,8 @@ export default class AlbumPage extends Component {
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AlbumPage);
