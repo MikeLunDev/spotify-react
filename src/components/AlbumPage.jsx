@@ -4,6 +4,7 @@ import { FaEllipsisH, FaHeart } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import { IoIosMusicalNote } from "react-icons/io";
 import { GoPrimitiveDot } from "react-icons/go";
+import { FaPlay } from "react-icons/fa";
 
 const headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -25,7 +26,8 @@ export default class AlbumPage extends Component {
       isLoading: true,
       results: null,
       errMess: undefined,
-      isOpen: false
+      isOpen: false,
+      hoverId: undefined
     };
   }
 
@@ -72,6 +74,18 @@ export default class AlbumPage extends Component {
     } else return `0:${seconds}`;
   };
 
+  handleHover = index => {
+    console.log(index);
+    this.setState({
+      hoverId: index
+    });
+  };
+  handleLeave = () => {
+    this.setState({
+      hoverId: undefined
+    });
+  };
+
   render() {
     return (
       <div
@@ -80,7 +94,7 @@ export default class AlbumPage extends Component {
       >
         <div className="main-albums-container">
           <div className="container-fluid">
-            <div className="row  ">
+            <div className="row ">
               {this.state.isLoading && (
                 <div
                   className="container"
@@ -104,59 +118,86 @@ export default class AlbumPage extends Component {
                     >
                       <div className="text-center py-2">
                         <img
-                          className="img-fluid mt-4"
+                          className="img-fluid mt-4 albumPicture shadow-lg rounded"
                           src={this.state.results.cover_medium}
                           alt="album cover"
                         />
-                        <h4 className="myAlbumTitle pt-3">
+                        <h4 className="myAlbumTitle pt-3 pb-0 mb-0">
                           {this.state.results.title}
                         </h4>
-                        <p>{this.state.results.artist.name}</p>
+                        <p className="albumUnderLink2">
+                          {this.state.results.artist.name}
+                        </p>
                         <button className="play mt-3">PLAY</button>
                         <div className="py-2">
-                          <span
-                            style={{ fontSize: "13px" }}
-                            className="text-muted font-weight-bold"
-                          >
+                          <p className="dateAndSongs">
                             {this.state.results.release_date.substring(0, 4)} -{" "}
                             {this.state.results.nb_tracks} SONGS
-                          </span>
+                          </p>
                         </div>
-                        <div className="pt-4">
+                        <div className="pt-4 mr-4">
                           {!this.state.isOpen ? (
                             <FiHeart
-                              size="30px"
+                              size="23px"
                               onClick={this.toggle}
-                              className="mx-3"
+                              className="mx-4"
+                              style={{ color: "white" }}
                             />
                           ) : (
                             <FaHeart
-                              size="30px"
+                              size="23px"
                               onClick={this.toggle}
-                              className="mx-3"
+                              className="mx-4"
+                              style={{ color: "white" }}
                             />
                           )}
-                          <FaEllipsisH size="30px" className="mr-3" />
+                          <FaEllipsisH
+                            size="19px"
+                            className="ml-1"
+                            style={{ color: "white" }}
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="col-xs-12 col-lg-9 col-xl-8 pt-5 pr-2 mb-2 pb-3 pl-lg-5 pl-xl-0 pl-md-0">
                       <ul className="list-unstyled w-100 ">
                         {this.state.results.tracks.data.map((track, index) => (
-                          <li key={index} className="albumList px-2 py-1 w-100">
+                          <li
+                            onMouseEnter={() => this.handleHover(index)}
+                            onMouseLeave={this.handleLeave}
+                            key={index}
+                            className="albumList px-2 py-1 w-100"
+                          >
                             <div className="row">
                               <div className="col-12 py-0 ">
                                 <div className="d-flex justify-content-between align-items-center">
                                   <div>
-                                    <IoIosMusicalNote
-                                      size="22px"
-                                      className="mr-2 mb-2 d-inline-block pt-1"
-                                    />
+                                    {this.state.hoverId >= 0 &&
+                                    this.state.hoverId === index ? (
+                                      <FaPlay
+                                        size="21px"
+                                        className="mr-2 mb-2 d-inline-block pt-2"
+                                        style={{ color: "white" }}
+                                      />
+                                    ) : (
+                                      <IoIosMusicalNote
+                                        size="22px"
+                                        className="mr-2 mb-2 d-inline-block pt-1"
+                                      />
+                                    )}
                                     <p className="albumTrackTitle ">
                                       {track.title}
                                     </p>
                                   </div>
                                   <div>
+                                    {this.state.hoverId >= 0 &&
+                                      this.state.hoverId === index && (
+                                        <FaEllipsisH
+                                          size="13px"
+                                          className="mr-5"
+                                          style={{ color: "white" }}
+                                        />
+                                      )}
                                     <p className="secondsDuration">
                                       {this.giveMinutes(track.duration)}
                                     </p>

@@ -142,10 +142,18 @@ nav {
   display: inline-block;
   cursor: pointer;
   color: #fff;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 9px 50px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 47px;
+  letter-spacing: 0.09em;
   text-decoration: none;
+}
+
+.play:hover {
+  background-color: #44e77d;
+  border: 2px solid #44e77d;
+  font-size: 13px;
+  padding: 9px 48px;
 }
 
 .mySignup:active {
@@ -263,6 +271,38 @@ a:hover {
   margin: 10px;
   padding: 5px 10px;
 }
+
+/* ALMUBS */
+
+.header {
+  font-size: 36px;
+  line-height: 42px;
+  letter-spacing: -0.005em;
+  color: #fff;
+  text-transform: none;
+  margin: 24px 0;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.media-obj {
+  position: relative;
+}
+
+.album-label {
+  font-size: 15px;
+  font-weight: 600;
+  font-weight: bold;
+  color: #fff;
+}
+
+.albumList:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.albumList:hover div div h5 {
+  color: inherit;
+}
 .albumUnderLink {
   color: rgb(187, 176, 176);
   font-size: 13px;
@@ -286,6 +326,7 @@ a:hover {
 .albumUnderLink2:hover {
   color: white;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .albumTrackTitle {
@@ -305,38 +346,18 @@ a:hover {
   font-family: "Montserrat", sans-serif;
 }
 
-/* ALMUBS */
-
-.header {
-  font-size: 36px;
-  line-height: 44px;
-  letter-spacing: -0.005em;
-  color: #fff;
-  text-transform: none;
-  margin: 24px 0;
-  font-weight: 900;
-  text-transform: capitalize;
-}
-
-.media-obj {
-  position: relative;
-}
-
-.album-label {
-  font-size: 15px;
+.dateAndSongs {
+  font-size: 11.5px;
   font-weight: 600;
-  font-weight: bold;
-  color: #fff;
+  color: rgb(187, 176, 176);
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.07em;
+  line-height: 10px;
+  margin-top: 0.75rem;
 }
 
-.albumList:hover {
-  background: rgba(0, 0, 0, 0.3);
-
-  cursor: pointer;
-}
-
-.albumList:hover div div h5 {
-  color: inherit;
+.albumPicture {
+  
 }
 
 /*  FOOTER */
