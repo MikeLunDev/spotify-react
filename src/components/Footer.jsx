@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { FaPlay } from "react-icons/fa";
-import { FaFastBackward } from "react-icons/fa";
-import { FaFastForward } from "react-icons/fa";
-import { FaPause } from "react-icons/fa";
 import { connect } from "react-redux";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 import { handleIsPlaying } from "../actions/isPlaying";
 
 const mapStateToProps = state => state;
@@ -26,27 +24,41 @@ class Footer extends Component {
   };
 
   handleForward = () => {
-    console.log(this.props);
     if (this.state.index + 1 < this.props.playlist.length) {
+      //if the playlist is not at his last song
       this.setState({ index: this.state.index + 1 });
+    }
+  };
+
+  action = type => {
+    console.log(type);
+    switch (type) {
+      case "onClickPrevious":
+        this.handleBack();
+        return;
+      case "onClickNext":
+        this.handleForward();
+        return;
+      default:
+        return;
     }
   };
 
   render() {
     return (
       <footer className="row footer">
-        <div className="col-md-4">
+        <div className="col-xs-0 col-md-3">
           {this.props.playlist.length > 0 && (
-            <div className="row no-gutters pt-1">
-              <div className="col-3">
+            <div className="row h-100 pt-2 pb-5 d-flex justify-content-md-start">
+              <div className="col-xs-0 col-md-2">
                 <img
-                  className="img-fluid ThumnailImage rounded pl-2 pb-2"
+                  className="pl-2"
                   src={this.props.playlist[this.state.index].cover_small}
                   alt="album cover"
-                  style={{ heigth: "10px" }}
+                  style={{ position: "relative" }}
                 />
               </div>
-              <div className="col-8">
+              <div className="col-12 col-md-10 w-100">
                 <a className=" pt-0 pl-2">
                   {this.props.playlist[this.state.index].title_short}
                 </a>{" "}
@@ -58,43 +70,30 @@ class Footer extends Component {
             </div>
           )}
         </div>
-        <div className="col-md-4 text-center pt-4">
-          <FaFastBackward
-            onClick={this.handleBack}
-            size="21px"
-            className="mr-2 mb-2 d-inline-block pt-2"
-            style={{ color: "white", cursor: "pointer" }}
-          />
-          {!this.props.isPlaying && (
-            <FaPlay
-              onClick={this.props.togglePlaying}
-              size="21px"
-              className="mx-5 mb-2 d-inline-block pt-2"
-              style={{ color: "white", cursor: "pointer" }}
-            />
-          )}
-          {this.props.isPlaying && (
-            <FaPause
-              onClick={this.props.togglePlaying}
-              size="21px"
-              className="mx-5 mb-2 d-inline-block pt-2"
-              style={{ color: "white", cursor: "pointer" }}
-            />
-          )}
-          <FaFastForward
-            onClick={this.handleForward}
-            size="21px"
-            className="mr-2 mb-2 d-inline-block pt-2"
-            style={{ color: "white", cursor: "pointer" }}
+        <div className="col-xs-12 col-md-9">
+          <AudioPlayer
+            //autoPlayAfterSrcChange
+            onClickPrevious={e => this.action("onClickPrevious")}
+            onClickNext={evt => this.action("onClickNext")}
+            style={{
+              marginBottom: "30px",
+              backgroundColor: "#333333",
+              boxShadow: "none",
+              outline: "none",
+              textDecoration: "none"
+            }}
+            volume={1}
+            autoPlay
+            showSkipControls
+            progressUpdateInterval={100}
+            src={
+              this.props.playlist[this.state.index] &&
+              this.props.playlist[this.state.index].preview
+            }
           />
         </div>
-        {/* THUMNAIL IMAGE */}
-        <div className="col-md-4"></div>
       </footer>
     );
   }
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Footer);
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

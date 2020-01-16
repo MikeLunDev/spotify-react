@@ -4,7 +4,7 @@ import { FaEllipsisH, FaHeart } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import { IoIosMusicalNote } from "react-icons/io";
 import { GoPrimitiveDot } from "react-icons/go";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaPause } from "react-icons/fa";
 import { handleGetAlbum } from "../actions/albums";
 import { handleAddSongToPlaylist } from "../actions/playlist";
 import { handleIsPlaying } from "../actions/isPlaying";
@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => ({
   getAlbum: id => dispatch(handleGetAlbum(id)),
   addToPlaylist: (track, album) =>
     dispatch(handleAddSongToPlaylist(track, album)),
-  isPlaying: () => dispatch(handleIsPlaying())
+  togglePlay: id => dispatch(handleIsPlaying(id))
 });
 
 class AlbumPage extends Component {
@@ -101,7 +101,18 @@ class AlbumPage extends Component {
     });
   };
 
+  playAlbum = () => {
+    this.props.album.tracks.data
+      .slice()
+      .reverse()
+      .forEach(track => {
+        this.props.addToPlaylist(track, this.props.album);
+      });
+    this.props.togglePlay(this.props.album.tracks.data[0].id);
+  };
+
   render() {
+    console.log("insidealbumpage", this.props.isPlaying);
     return (
       <div
         className="col-6 col-sm-8 col-md-9 col-lg-9 col-xl-10 pl-4 position-relative"
@@ -143,7 +154,9 @@ class AlbumPage extends Component {
                         <p className="albumUnderLink2">
                           {this.props.album.artist.name}
                         </p>
-                        <button className="play mt-3">PLAY</button>
+                        <button className="play mt-3" onClick={this.playAlbum}>
+                          PLAY
+                        </button>
                         <div className="py-2">
                           <p className="dateAndSongs">
                             {this.props.album.release_date.substring(0, 4)} -{" "}
@@ -189,18 +202,29 @@ class AlbumPage extends Component {
                                   <div>
                                     {this.state.hoverId >= 0 &&
                                     this.state.hoverId === index ? (
-                                      <FaPlay
-                                        onClick={() => {
-                                          this.props.addToPlaylist(
-                                            track,
-                                            this.props.album
-                                          );
-                                          this.props.isPlaying();
-                                        }}
-                                        size="21px"
-                                        className="mr-2 mb-2 d-inline-block pt-2"
-                                        style={{ color: "white" }}
-                                      />
+                                      track.id === this.props.isPlaying ? (
+                                        <FaPause
+                                          onClick={() => {
+                                            this.props.togglePlay("");
+                                          }}
+                                          size="21px"
+                                          className="mr-2 mb-2 d-inline-block pt-2"
+                                          style={{ color: "white" }}
+                                        />
+                                      ) : (
+                                        <FaPlay
+                                          onClick={() => {
+                                            this.props.addToPlaylist(
+                                              track,
+                                              this.props.album
+                                            );
+                                            this.props.togglePlay(track.id);
+                                          }}
+                                          size="21px"
+                                          className="mr-2 mb-2 d-inline-block pt-2"
+                                          style={{ color: "white" }}
+                                        />
+                                      )
                                     ) : (
                                       <IoIosMusicalNote
                                         size="22px"
@@ -251,7 +275,4 @@ class AlbumPage extends Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AlbumPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

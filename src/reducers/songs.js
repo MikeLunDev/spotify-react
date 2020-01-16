@@ -5,7 +5,10 @@ export default function(state = {}, action) {
         ...state,
         [action.text]: [...action.payload]
       };
-
+    case "SEARCH_SONGS":
+      return {
+        [action.text]: [...action.payload]
+      };
     default:
       return state;
   }

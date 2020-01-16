@@ -1,10 +1,9 @@
-export const handleIsPlaying = () => {
+export const handleIsPlaying = id => {
   return (dispatch, getState) => {
-    const state = getState();
-    console.log(state.isPlaying);
+    console.log(id);
     dispatch({
       type: "IS_PLAYING",
-      payload: !state.isPlaying
+      payload: id
     });
   };
 };

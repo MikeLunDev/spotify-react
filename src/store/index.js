@@ -17,7 +17,7 @@ const initialState = {
   },
   album: {},
   playlist: [],
-  isPlaying: false
+  isPlaying: ""
 };
 
 const bigReducer = combineReducers({

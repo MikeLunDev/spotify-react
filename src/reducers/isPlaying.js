@@ -1,4 +1,4 @@
-export default function albumReducer(state = false, action) {
+export default function isPlayingReducer(state = "", action) {
   switch (action.type) {
     case "IS_PLAYING":
       return action.payload;

@@ -141,6 +141,7 @@ nav {
   border: 2px solid #1db954;
   display: inline-block;
   cursor: pointer;
+  outline: none;
   color: #fff;
   font-size: 12px;
   font-weight: 600;
@@ -152,6 +153,7 @@ nav {
 .play:hover {
   background-color: #44e77d;
   border: 2px solid #44e77d;
+  outline: none;
   font-size: 13px;
   padding: 9px 48px;
 }
@@ -354,9 +356,6 @@ a:hover {
   letter-spacing: 0.07em;
   line-height: 10px;
   margin-top: 0.75rem;
-}
-
-.albumPicture {
 }
 
 /*  FOOTER */
