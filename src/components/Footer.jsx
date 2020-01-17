@@ -11,12 +11,10 @@ const mapDispatchToProps = dispatch => ({
 class Footer extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       index: 0
     };
   }
-
   handleBack = () => {
     if (this.state.index != 0) {
       this.setState({ index: this.state.index - 1 });
@@ -72,7 +70,7 @@ class Footer extends Component {
         </div>
         <div className="col-xs-12 col-md-9">
           <AudioPlayer
-            //autoPlayAfterSrcChange
+            ref={this.props.audioref}
             onClickPrevious={e => this.action("onClickPrevious")}
             onClickNext={evt => this.action("onClickNext")}
             style={{
@@ -96,4 +94,6 @@ class Footer extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  forwardRef: true
+})(Footer);

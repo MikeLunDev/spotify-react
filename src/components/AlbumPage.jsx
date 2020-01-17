@@ -214,6 +214,7 @@ class AlbumPage extends Component {
                                         <FaPause
                                           onClick={() => {
                                             this.props.togglePlay("");
+                                            this.props.audioref.current.audio.pause();
                                           }}
                                           size="21px"
                                           className="mr-2 mb-2 d-inline-block pt-2"
@@ -227,6 +228,9 @@ class AlbumPage extends Component {
                                               this.props.album
                                             );
                                             this.props.togglePlay(track.id);
+                                            console.log(
+                                              this.props.audioref.current.audio.play()
+                                            );
                                           }}
                                           size="21px"
                                           className="mr-2 mb-2 d-inline-block pt-2"
@@ -283,4 +287,6 @@ class AlbumPage extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  forwardRef: true
+})(AlbumPage);

@@ -10,7 +10,7 @@ import ShowSearch from "./ShowSearch";
 export default class MainPage extends Component {
   constructor(props) {
     super(props);
-
+    this.audioRef = React.createRef();
     this.state = {
       searchText: undefined
     };
@@ -62,9 +62,15 @@ export default class MainPage extends Component {
               )}
             />
             <Route path="/search/:SearchText" component={ShowSearch} />
-            <Route path="/AlbumPage/:AlbumId" component={AlbumPage} />
+            {/*   // <Route path="/AlbumPage/:AlbumId" component={AlbumPage} /> */}
+            <Route
+              path="/AlbumPage/:AlbumId"
+              render={props => (
+                <AlbumPage {...props} audioref={this.audioRef} />
+              )}
+            />
           </div>
-          <Footer />
+          <Footer audioref={this.audioRef} />
         </div>
       </Router>
     );
