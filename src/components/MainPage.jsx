@@ -32,7 +32,7 @@ export default class MainPage extends Component {
               path="/"
               exact
               render={() => (
-                <HomePage query={["Country", "Jay-Z", "mannarino", "Dr Dre"]} />
+                <HomePage query={["Country", "Jay-Z", "Queen", "Dr Dre"]} />
               )}
             />
             <Route
