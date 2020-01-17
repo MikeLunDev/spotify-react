@@ -6,7 +6,7 @@ import { handleIsPlaying } from "../actions/isPlaying";
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
-  togglePlaying: () => dispatch(handleIsPlaying())
+  togglePlay: id => dispatch(handleIsPlaying(id))
 });
 class Footer extends Component {
   constructor(props) {
@@ -17,19 +17,27 @@ class Footer extends Component {
   }
   handleBack = () => {
     if (this.state.index != 0) {
+      let id = this.props.playlist[this.state.index - 1].id;
+      this.props.togglePlay(id);
       this.setState({ index: this.state.index - 1 });
     }
   };
 
   handleForward = () => {
     if (this.state.index + 1 < this.props.playlist.length) {
-      //if the playlist is not at his last song
+      let id = this.props.playlist[this.state.index + 1].id;
+      this.props.togglePlay(id);
       this.setState({ index: this.state.index + 1 });
     }
   };
 
+  componentDidUpdate = prevProps => {
+    if (prevProps.playlist !== this.props.playlist) {
+      this.setState({ index: 0 });
+    }
+  };
+
   action = type => {
-    console.log(type);
     switch (type) {
       case "onClickPrevious":
         this.handleBack();

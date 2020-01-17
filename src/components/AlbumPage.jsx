@@ -63,7 +63,6 @@ class AlbumPage extends Component {
 
   componentDidMount = async () => {
     let albumId = this.getAlbumId();
-    console.log("params", window.location.href);
     await this.props.getAlbum(albumId);
     setTimeout(
       () =>
@@ -120,7 +119,6 @@ class AlbumPage extends Component {
   };
 
   render() {
-    console.log("insidealbumpage", this.props.isPlaying);
     return (
       <div
         className="col-6 col-sm-8 col-md-9 col-lg-9 col-xl-10 pl-4 position-relative"
@@ -228,9 +226,7 @@ class AlbumPage extends Component {
                                               this.props.album
                                             );
                                             this.props.togglePlay(track.id);
-                                            console.log(
-                                              this.props.audioref.current.audio.play()
-                                            );
+                                            this.props.audioref.current.audio.play();
                                           }}
                                           size="21px"
                                           className="mr-2 mb-2 d-inline-block pt-2"
