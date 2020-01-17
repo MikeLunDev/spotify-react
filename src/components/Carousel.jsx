@@ -59,7 +59,12 @@ export default class SongCarousel extends Component {
                   alt={item.album.title}
                 />
                 <div className="middle">
-                  <img src={playImg} alt="play button" width="40px" />
+                  <Link
+                    className="nav-link text-white text-center"
+                    to={"/AlbumPage/" + item.album.id + "/play"}
+                  >
+                    <img src={playImg} alt="play button" width="40px" />
+                  </Link>
                 </div>
               </div>
               <Link

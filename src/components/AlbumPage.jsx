@@ -63,12 +63,20 @@ class AlbumPage extends Component {
 
   componentDidMount = async () => {
     let albumId = this.getAlbumId();
+    console.log("params", window.location.href);
     await this.props.getAlbum(albumId);
     setTimeout(
       () =>
-        this.setState({
-          isLoading: false
-        }),
+        this.setState(
+          {
+            isLoading: false
+          },
+          () => {
+            if (window.location.href.includes("/play")) {
+              this.playAlbum();
+            }
+          }
+        ),
       1000
     );
   };
