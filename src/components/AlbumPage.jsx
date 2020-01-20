@@ -216,7 +216,7 @@ class AlbumPage extends Component {
                                           }}
                                           size="21px"
                                           className="mr-2 mb-2 d-inline-block pt-2"
-                                          style={{ color: "white" }}
+                                          style={{ color: "#1ba94e" }}
                                         />
                                       ) : (
                                         <FaPlay
@@ -236,10 +236,24 @@ class AlbumPage extends Component {
                                     ) : (
                                       <IoIosMusicalNote
                                         size="22px"
+                                        style={{
+                                          color:
+                                            track.id === this.props.isPlaying
+                                              ? "#1ba94e"
+                                              : "white"
+                                        }}
                                         className="mr-2 mb-2 d-inline-block pt-1"
                                       />
                                     )}
-                                    <p className="albumTrackTitle ">
+                                    <p
+                                      className="albumTrackTitle "
+                                      style={{
+                                        color:
+                                          track.id === this.props.isPlaying
+                                            ? "#1ba94e"
+                                            : "white"
+                                      }}
+                                    >
                                       {track.title}
                                     </p>
                                   </div>
