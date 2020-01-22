@@ -53,15 +53,19 @@ class MainAlbumContainer extends Component {
           this.props.error.message === "" &&
           !this.state.isLoading && (
             <div className="main-albums-container">
-              {Object.entries(this.props.songs).map((titleAndList, index) => (
-                <SongCarousel
-                  key={index}
-                  albumList={titleAndList[1]}
-                  title={titleAndList[0]}
-                />
-              ))}
+              {Object.entries(this.props.songs).map((titleAndList, index) => {
+                console.log(this.props.songs);
+                return (
+                  <SongCarousel
+                    key={index}
+                    albumList={titleAndList[1]}
+                    title={titleAndList[0]}
+                  />
+                );
+              })}
             </div>
           )}
+        }
         {this.props.error.fetchError && !this.state.isLoading && (
           <Alert color="danger">
             <h3>

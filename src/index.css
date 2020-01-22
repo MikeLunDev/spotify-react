@@ -245,6 +245,19 @@ a:hover {
 .activeLink {
   color: #fff;
 }
+.cta-album-title {
+  color: #b3b3b3;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.025em;
+  font-weight: 550;
+  color: #b3b3b3;
+  text-transform: none;
+}
+.cta-album-title:hover {
+  color: white;
+  text-decoration: underline;
+}
 
 /****************************** main content *************************** */
 

@@ -4,7 +4,7 @@ export const handleGetSongs = (query, search = false) => {
   return async (dispatch, getState) => {
     var response = await fetch(FETCH_SEARCH_URL + query, FETCH_PARAMS);
     var json = await response.json();
-    console.log("search", search);
+    console.log("search", json);
     return response.ok
       ? search
         ? dispatch({

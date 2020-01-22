@@ -67,13 +67,24 @@ export default class SongCarousel extends Component {
                   </Link>
                 </div>
               </div>
-              <Link
-                className="nav-link text-white text-center"
-                to={"/AlbumPage/" + item.album.id}
-              >
-                {" "}
-                {item.album.title}
-              </Link>
+              <div className="pr-2 pt-1">
+                <div
+                  className="pt-1 text-white"
+                  to={"/AlbumPage/" + item.album.id}
+                >
+                  {" "}
+                  {item.title_short}
+                </div>
+                <Link
+                  className="cta-album-title"
+                  to={"/AlbumPage/" + item.album.id}
+                >
+                  {" "}
+                  {item.album.title.length > 40
+                    ? item.album.title.substring(0, 40).concat("...")
+                    : item.album.title}
+                </Link>
+              </div>
             </div>
           ))}
         </Slider>
