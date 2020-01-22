@@ -17,7 +17,10 @@ export default class HomePage extends Component {
       >
         <TopMenu />
         {this.props.query.length > 0 && (
-          <MainAlbumContainer query={this.props.query} />
+          <MainAlbumContainer
+            query={this.props.query}
+            audioref={this.props.audioref}
+          />
         )}
       </div>
     );

@@ -2,8 +2,18 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import playImg from "../assets/Play.png";
+import { connect } from "react-redux";
+import { handleAddSongToPlaylist } from "../actions/playlist";
+import { handleIsPlaying } from "../actions/isPlaying";
 
-export default class SongCarousel extends Component {
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
+  addToPlaylist: (track, album) =>
+    dispatch(handleAddSongToPlaylist(track, album)),
+  togglePlay: id => dispatch(handleIsPlaying(id))
+});
+
+class SongCarousel extends Component {
   constructor(props) {
     super(props);
 
@@ -59,12 +69,18 @@ export default class SongCarousel extends Component {
                   alt={item.album.title}
                 />
                 <div className="middle">
-                  <Link
+                  <div
                     className="nav-link text-white text-center"
                     to={"/AlbumPage/" + item.album.id + "/play"}
+                    onClick={() => {
+                      const { album: removedKey, ...newObj } = item; //exactly remove the album property keeping others not touched
+                      this.props.addToPlaylist(newObj, item.album);
+                      this.props.togglePlay(item.id);
+                      this.props.audioref.current.audio.play();
+                    }}
                   >
                     <img src={playImg} alt="play button" width="40px" />
-                  </Link>
+                  </div>
                 </div>
               </div>
               <div className="pr-2 pt-1">
@@ -92,3 +108,6 @@ export default class SongCarousel extends Component {
     );
   }
 }
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  forwardRef: true
+})(SongCarousel);

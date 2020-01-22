@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import SpotifySideBar from "./SpotifySideBar";
 import Footer from "./Footer";
 import HomePage from "./HomePage";
@@ -12,7 +17,8 @@ export default class MainPage extends Component {
     super(props);
     this.audioRef = React.createRef();
     this.state = {
-      searchText: undefined
+      searchText: undefined,
+      redirect: ""
     };
   }
 
@@ -31,8 +37,12 @@ export default class MainPage extends Component {
             <Route
               path="/"
               exact
-              render={() => (
-                <HomePage query={["Country", "Jay-Z", "Queen", "Dr Dre"]} />
+              render={props => (
+                <HomePage
+                  {...props}
+                  query={["Country", "Jay-Z", "Queen", "Dr Dre"]}
+                  audioref={this.audioRef}
+                />
               )}
             />
             <Route
@@ -47,6 +57,13 @@ export default class MainPage extends Component {
                     type="search"
                     autoFocus
                     onChange={this.handleChange}
+                    onKeyPress={event => {
+                      if (event.key === "Enter") {
+                        this.setState({
+                          redirect: "/search/" + (this.state.searchText || "")
+                        });
+                      }
+                    }}
                     value={this.state.searchText}
                     placeholder="Write an artist/band"
                   />
@@ -61,8 +78,12 @@ export default class MainPage extends Component {
                 </div>
               )}
             />
-            <Route path="/search/:SearchText" component={ShowSearch} />
-            {/*   // <Route path="/AlbumPage/:AlbumId" component={AlbumPage} /> */}
+            <Route
+              path="/search/:SearchText"
+              render={props => (
+                <ShowSearch {...props} audioref={this.audioRef} />
+              )}
+            />
             <Route
               path="/AlbumPage/:AlbumId"
               render={props => (
@@ -71,6 +92,9 @@ export default class MainPage extends Component {
             />
           </div>
           <Footer audioref={this.audioRef} />
+          {this.state.redirect !== "" && (
+            <Redirect to={"/search/" + (this.state.searchText || "")} />
+          )}
         </div>
       </Router>
     );

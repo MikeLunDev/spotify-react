@@ -88,15 +88,17 @@ nav {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+  z-index: 999;
 }
-
 .media-obj:hover .image {
-  opacity: 0.3;
+  opacity: 0.2;
   cursor: pointer;
 }
 
 .media-obj:hover .middle {
-  opacity: 1;
+  opacity: 3;
+  background: rgba(0, 0, 0, 0.2);
+  background-size: cover;
   cursor: pointer;
 }
 

@@ -54,18 +54,17 @@ class MainAlbumContainer extends Component {
           !this.state.isLoading && (
             <div className="main-albums-container">
               {Object.entries(this.props.songs).map((titleAndList, index) => {
-                console.log(this.props.songs);
                 return (
                   <SongCarousel
                     key={index}
                     albumList={titleAndList[1]}
                     title={titleAndList[0]}
+                    audioref={this.props.audioref}
                   />
                 );
               })}
             </div>
           )}
-        }
         {this.props.error.fetchError && !this.state.isLoading && (
           <Alert color="danger">
             <h3>
