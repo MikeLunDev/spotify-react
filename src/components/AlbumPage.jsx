@@ -80,10 +80,29 @@ class AlbumPage extends Component {
     );
   };
 
+  componentWillUnmount = () => {
+    if (this.state.isOpen) {
+      if (localStorage.getItem(this.props.album.title) === null) {
+        //if the album is already there
+        localStorage.setItem(
+          this.props.album.title,
+          JSON.stringify(this.props.album)
+        );
+      }
+    }
+  };
+
   toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    if (localStorage.getItem(this.props.album.title) !== null) {
+      localStorage.removeItem(this.props.album.title);
+      this.setState({
+        isOpen: false
+      });
+    } else {
+      this.setState({
+        isOpen: !this.state.isOpen
+      });
+    }
   };
 
   giveMinutes = seconds => {
@@ -119,6 +138,7 @@ class AlbumPage extends Component {
   };
 
   render() {
+    console.log("render", localStorage.getItem(this.props.album.title));
     return (
       <div
         className="col-6 col-sm-8 col-md-9 col-lg-9 col-xl-10 pl-4 position-relative"
@@ -170,15 +190,17 @@ class AlbumPage extends Component {
                           </p>
                         </div>
                         <div className="pt-4 mr-4">
-                          {!this.state.isOpen ? (
-                            <FiHeart
+                          {this.state.isOpen ||
+                          localStorage.getItem(this.props.album.title) !==
+                            null ? (
+                            <FaHeart
                               size="23px"
                               onClick={this.toggle}
                               className="mx-4"
                               style={{ color: "white" }}
                             />
                           ) : (
-                            <FaHeart
+                            <FiHeart
                               size="23px"
                               onClick={this.toggle}
                               className="mx-4"
@@ -191,6 +213,11 @@ class AlbumPage extends Component {
                             style={{ color: "white" }}
                           />
                         </div>
+                        {localStorage.length === 0 && !this.state.isOpen && (
+                          <div className="pt-4 text-center text-white">
+                            Click on the heart to add the album in your library
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="col-xs-12 col-lg-9 col-xl-8 pt-5 pr-2 mb-2 pb-3 pl-lg-5 pl-xl-0 pl-md-0">

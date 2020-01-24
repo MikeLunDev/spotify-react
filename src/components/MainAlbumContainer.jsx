@@ -19,9 +19,13 @@ class MainAlbumContainer extends Component {
   }
 
   componentDidMount = async () => {
-    this.props.query.map(query =>
-      this.props.getSongs(query, this.props.search)
-    );
+    if (this.props.query !== undefined) {
+      this.props.query.map(query =>
+        this.props.getSongs(query, this.props.search)
+      );
+    }
+    if (this.props.library !== undefined) {
+    }
     setTimeout(
       () =>
         this.setState({
