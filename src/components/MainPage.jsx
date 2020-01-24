@@ -11,6 +11,7 @@ import HomePage from "./HomePage";
 import AlbumPage from "./AlbumPage";
 import { FaWindowClose } from "react-icons/fa";
 import ShowSearch from "./ShowSearch";
+import MyLibrary from "./MyLibrary";
 
 export default class MainPage extends Component {
   constructor(props) {
@@ -76,6 +77,13 @@ export default class MainPage extends Component {
                     </Link>
                   </button>
                 </div>
+              )}
+            />
+            <Route
+              path="/my-library"
+              exact
+              render={props => (
+                <MyLibrary {...props} audioref={this.audioRef} />
               )}
             />
             <Route

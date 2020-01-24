@@ -27,7 +27,7 @@ export default class SpotifySideBar extends Component {
                 </Link>
               </li>
               <li className="nav-item spotifyFont py-1">
-                <Link className="nav-link spotifyFont" to="/">
+                <Link className="nav-link spotifyFont" to="/my-library">
                   {" "}
                   <IoIosBookmark className="mb-1" /> Your Library
                 </Link>

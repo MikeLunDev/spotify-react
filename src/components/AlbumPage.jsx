@@ -138,7 +138,6 @@ class AlbumPage extends Component {
   };
 
   render() {
-    console.log("render", localStorage.getItem(this.props.album.title));
     return (
       <div
         className="col-6 col-sm-8 col-md-9 col-lg-9 col-xl-10 pl-4 position-relative"

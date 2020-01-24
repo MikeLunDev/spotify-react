@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Alert, Badge } from "reactstrap";
-import SongCarousel from "./Carousel";
 import { ClipLoader } from "react-spinners";
 import { connect } from "react-redux";
 import { handleGetSongs } from "../actions/songs";
+import SongCarousel from "./Carousel";
+import LibraryCarousel from "./LibraryCarousel";
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
@@ -14,7 +15,9 @@ class MainAlbumContainer extends Component {
     super(props);
 
     this.state = {
-      isLoading: true
+      isLoading: true,
+      arrayOfValues: null,
+      arrayOfKeys: null
     };
   }
 
@@ -25,6 +28,22 @@ class MainAlbumContainer extends Component {
       );
     }
     if (this.props.library !== undefined) {
+      const arrayOfKeys = Object.keys(localStorage);
+      const arrayOfValues = Object.values(localStorage)
+        .map(item => JSON.parse(item))
+        .map(item => {
+          const { cover_medium, title, id, cover_small } = item;
+          return {
+            album: {
+              cover_medium,
+              title,
+              id,
+              cover_small
+            },
+            ...item.tracks.data
+          };
+        });
+      this.setState({ arrayOfKeys, arrayOfValues });
     }
     setTimeout(
       () =>
@@ -55,7 +74,8 @@ class MainAlbumContainer extends Component {
         )}
         {this.props.songs &&
           this.props.error.message === "" &&
-          !this.state.isLoading && (
+          !this.state.isLoading &&
+          this.props.library === undefined && (
             <div className="main-albums-container">
               {Object.entries(this.props.songs).map((titleAndList, index) => {
                 return (
@@ -67,6 +87,23 @@ class MainAlbumContainer extends Component {
                   />
                 );
               })}
+            </div>
+          )}
+        {this.props.library &&
+          this.props.error.message === "" &&
+          !this.state.isLoading &&
+          this.state.arrayOfValues !== null &&
+          this.state.arrayOfKeys !== null && (
+            <div className="main-albums-container">
+              {this.state.arrayOfKeys.map((key, index) => (
+                <LibraryCarousel
+                  key={index}
+                  albumList={[this.state.arrayOfValues[index]]}
+                  title={key}
+                  audioref={this.props.audioref}
+                />
+              ))}
+              }
             </div>
           )}
         {this.props.error.fetchError && !this.state.isLoading && (

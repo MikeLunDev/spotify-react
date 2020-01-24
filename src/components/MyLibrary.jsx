@@ -16,11 +16,7 @@ class MyLibrary extends React.Component {
         id="parent"
       >
         <TopMenu />
-        <MainAlbumContainer
-          audioref={this.props.audioref}
-          search={true}
-          query={[this.props.match.params.SearchText]}
-        />
+        <MainAlbumContainer audioref={this.props.audioref} library={true} />
       </div>
     );
   }
