@@ -260,6 +260,10 @@ a:hover {
   color: white;
   text-decoration: underline;
 }
+.underline-go-home:hover {
+  text-decoration: underline;
+  color: blue;
+}
 
 /****************************** main content *************************** */
 

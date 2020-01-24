@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { handleGetSongs } from "../actions/songs";
 import SongCarousel from "./Carousel";
 import LibraryCarousel from "./LibraryCarousel";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
@@ -103,7 +104,6 @@ class MainAlbumContainer extends Component {
                   audioref={this.props.audioref}
                 />
               ))}
-              }
             </div>
           )}
         {this.props.error.fetchError && !this.state.isLoading && (
@@ -122,6 +122,19 @@ class MainAlbumContainer extends Component {
               <br />
             </h3>
             <h5>Thanks for your patience, we hope to see you again!</h5>
+          </Alert>
+        )}
+        {this.props.library && localStorage.length === 0 && (
+          <Alert color="danger">
+            <h3>
+              There is no song yet in your library: <br />
+              Click on the heart of an album page to add it to
+              <Badge color="success">Your Library</Badge>
+              <br />
+              <Link to="/" className="underline-go-home">
+                Go back to HomePage
+              </Link>
+            </h3>
           </Alert>
         )}
       </>
