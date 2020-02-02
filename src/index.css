@@ -165,6 +165,14 @@ nav {
   top: 1px;
 }
 
+.githublink {
+  color: white;
+}
+
+.githublink:hover {
+  color: black;
+}
+
 /********************************  SEARCH BUTTON *****************************/
 #search {
   position: fixed;

@@ -37,18 +37,14 @@ export default class SpotifySideBar extends Component {
           <div className="align-self-center w-100 ">
             <ul className="navbar-nav pl-1 flex-column align-items-center">
               <li className="py-2 pr-2">
-                <button className="mySignup d-xs-inline-block d-sm-none d-md-none d-lg-inline-block">
-                  SIGNUP
-                </button>
-              </li>
-
-              <li className="py-2 pr-2">
                 <button className="myLogin d-xs-inline-block  d-sm-none d-md-none d-lg-inline-block">
-                  LOGIN
+                  <a
+                    className="githublink"
+                    href="https://github.com/MikeLunDev/spotify-react-redux"
+                  >
+                    GITHUB REPO
+                  </a>
                 </button>
-              </li>
-              <li className="py-2 pr-3 text-center">
-                <p>Cookie Policy | Privacy</p>
               </li>
             </ul>
           </div>
